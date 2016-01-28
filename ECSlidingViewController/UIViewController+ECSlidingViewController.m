@@ -26,12 +26,11 @@
 @implementation UIViewController (ECSlidingViewController)
 
 - (ECSlidingViewController *)slidingViewController {
-    UIViewController *viewController = self.parentViewController ? self.parentViewController : self.presentingViewController;
-    while (!(viewController == nil || [viewController isKindOfClass:[ECSlidingViewController class]])) {
-        viewController = viewController.parentViewController ? viewController.parentViewController : viewController.presentingViewController;
+    if ([self isKindOfClass:[ECSlidingViewController class]]) {
+        return self;
+    } else {
+        return [self.parentViewController slidingViewController];
     }
-    
-    return (ECSlidingViewController *)viewController;
 }
 
 @end
